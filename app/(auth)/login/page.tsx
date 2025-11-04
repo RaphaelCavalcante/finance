@@ -1,112 +1,12 @@
-"use client";
-import CardWrapper from "@/components/CardWrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import FormError from "@/components/FormError";
-import { useTransition } from "react";
-import Link from "next/link";
+import LoginForm from "../components/LoginForm";
 
-const SECRET = process.env.NEXTAUTH_SECRET;
-
-function LoginForm() {
-  const [isPending, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    defaultValues: { email: "", password: "" },
-    resolver: zodResolver(LoginSchema),
-  });
-
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    startTransition(() => {
-      signIn("credentials", { ...values, redirect: false })
-        .then((data) => {
-          console.log(data)
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    });
-  };
-
+function LoginPage() {
   return (
-    <CardWrapper headerLabel="Welcome" showButtons>
-      <div className="space-y-4">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-4 flex-col">
-              <FormField
-                name="email"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="email"
-                        {...field}
-                        disabled={isPending}
-                        placeholder="example@email.com"
-                        type="email"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              ></FormField>
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="password"
-                        {...field}
-                        disabled={isPending}
-                        placeholder="******"
-                        type="password"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              ></FormField>
-              <FormError message="Email/password invalid" />
-
-              <Button className="w-full" type="submit" variant={"outline"}>
-                Login
-              </Button>
-
-              <Button
-                className="w-full bg-blue-400"
-                onClick={() => signIn("google", { redirect: true })}
-              >
-                Login with Google
-              </Button>
-            </div>
-          </form>
-        </Form>
-        <div className="flex flex-row w-full justify-end">
-          <Link href="/register">
-            <span className="text-sm  underline">Create an account</span>
-          </Link>
-        </div>
+    <div className="flex h-full w-full">
+      <div className="flex m-auto w-1/2 h-1/2">
+        <LoginForm onSuccess="/dashboard" onError="#" />
       </div>
-    </CardWrapper>
+    </div>
   );
 }
-
-export default LoginForm;
+export default LoginPage;

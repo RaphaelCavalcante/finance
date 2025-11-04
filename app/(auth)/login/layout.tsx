@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Login Page"
 }
 export default function LoginLayout({ children }: { children: React.ReactNode }) {
-    return <section className="min-h-screen flex justify-center items-center">
+    return <section className="flex h-full w-full">
        {children}
     </section>
 }
