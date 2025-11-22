@@ -1,10 +1,12 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import withAuth from "@/lib/withAuth";
 
 function Dashboard() {
-  return  <div className="flex flex-col w-full h-full border">
-    TODO dashboard page
-  </div>;
+  return (
+    <div className="flex flex-col w-full h-full border">
+      TODO dashboard page
+    </div>
+  );
 }
-export default Dashboard;
+export default withAuth(Dashboard);

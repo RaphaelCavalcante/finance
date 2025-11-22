@@ -1,11 +1,14 @@
+"use client"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
+
 
 const withAuth = (Component: any) => {
     const auth = (props: any) => {
+        const router = useRouter()
         const { data: session, status } = useSession({
             required: true, onUnauthenticated() {
-                useRouter().push("/login")
+                router.push("/login")
             }
         })
         if (status === "loading") {

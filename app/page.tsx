@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoadingIndicator from "@/components/LoadingIndicatorSpinner";
 import Dashboard from "./dashboard/page";
+import withAuth from "@/lib/withAuth";
 
-export default function App() {
+function App() {
   const session = useSession();
   const route = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     if (session.status == "authenticated") {
-      console.log(session.status);
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
@@ -41,3 +41,4 @@ export default function App() {
     </main>
   );
 }
+export default App

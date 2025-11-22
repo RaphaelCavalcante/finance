@@ -4,6 +4,7 @@ import "./globals.css";
 import NextAuthProvider from "./NextAuthProvider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { getUserSession } from "@/lib/session";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body
@@ -35,7 +37,7 @@ export default function RootLayout({
             <div className="flex flex-row w-full h-full">
               <div className="flex flex-col relative">
                 <AppSidebar />
-                <SidebarTrigger className="flex z-10 justify-end w-full px-10 pt-2  absolute bg-transparent hover:bg-transparent hover:cursor-pointer" />
+                
               </div>
               <div className="flex flex-col w-full h-full">
                 <div className="flex p-2 h-full w-full">{children}</div>
